@@ -14,6 +14,10 @@ var loadComp = 0;
 function preload() {
   ampera = loadFont('data/Ampera.ttf');
 }
+var vol1hist = [];
+var vol2hist = [];
+var vol3hist = [];
+
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -24,6 +28,13 @@ function setup() {
   medx = width/2;
   medy = height/2;
   textFont("Ampera");
+  amp1 = new p5.Amplitude();
+  amp2 = new p5.Amplitude();
+  amp3 = new p5.Amplitude();
+  amp1.setInput(module01);
+  amp2.setInput(module02);
+  amp3.setInput(module03);
+
 }
 
 function loaded1() {
@@ -46,10 +57,12 @@ function draw() {
 
   // first module
   fill(39,60,81);
-  rect(medx-248, medy+15, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
+  rect(medx-248, medy+17, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
   fill(50, 82, 115);
-  rect(medx-248, medy, boxsizex, boxsizey, 0, 10, 10, 10);
-  rect(medx-323, medy-70, 50, 40, 10, 10, 0, 0);
+  rect(medx-248, medy, boxsizex, boxsizey, 0, 0, 10, 10);
+  rect(medx-323, medy-70, 50, 40, 10, 0, 0, 0);
+  fill(30, 50, 70);
+  rect(medx-219, medy-74, 142, 32, 0, 10, 0, 0);
   fill(150)
   textAlign(CENTER);
   textStyle(BOLD);
@@ -58,10 +71,12 @@ function draw() {
 
   // second module
   fill(39,60,81);
-  rect(medx, medy+15, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
+  rect(medx, medy+17, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
   fill(50, 82, 115);
-  rect(medx, medy, boxsizex, boxsizey, 0, 10, 10, 10);
-  rect(medx-75, medy-70, 50, 40, 10, 10, 0, 0);
+  rect(medx, medy, boxsizex, boxsizey, 0, 0, 10, 10);
+  rect(medx-75, medy-70, 50, 40, 10, 0, 0, 0);
+  fill(30, 50, 70);
+  rect(medx+29, medy-74, 142, 32, 0, 10, 0, 0);
   fill(150)
   textAlign(CENTER);
   textStyle(BOLD);
@@ -70,10 +85,12 @@ function draw() {
 
   // third module
   fill(39,60,81);
-  rect(medx+248, medy+15, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
+  rect(medx+248, medy+17, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
   fill(50, 82, 115);
-  rect(medx+248, medy, boxsizex, boxsizey, 0, 10, 10, 10);
-  rect(medx+173, medy-70, 50, 40, 10, 10, 0, 0);
+  rect(medx+248, medy, boxsizex, boxsizey, 0, 0, 10, 10);
+  rect(medx+173, medy-70, 50, 40, 10, 0, 0, 0);
+  fill(30, 50, 70);
+  rect(medx+277, medy-74, 142, 32, 0, 10, 0, 0);
   fill(150)
   textAlign(CENTER);
   textStyle(BOLD);
@@ -90,10 +107,12 @@ function draw() {
        ovPr = 20;
     }
 
-    rule = height/2;
-    stroke(0);
-    line(0, rule, windowWidth, rule);
-    noStroke();
+    // ruleH = medy-74;
+    // stroke(0);
+    // line(0, ruleH, windowWidth, ruleH);
+    // ruleV = 530;
+    // line(ruleV, 0, ruleV, windowHeight);
+    // noStroke();
 
 
     // sliderPan1
@@ -110,7 +129,7 @@ function draw() {
     } else {
       fill(150);
     }
-    text(Math.floor((fadePosx1-395)*1.25)-50, slix1-60, 420);
+    text(Math.floor((fadePosx1-395)*1.25)-50, slix1-55, 420);
     if (mouseIsPressed && mouseX>=slix1-40 && mouseX<=slix1+40 &&
     mouseY>=sliy1-10 && mouseY<=sliy1+10) {
       sx1 = mouseX;
@@ -136,7 +155,7 @@ function draw() {
     } else {
       fill(150);
     }
-    text(Math.floor((fadePosx2-395)*1.25), slix2+60, 420);
+    text(Math.floor((fadePosx2-395)*1.25), slix2+55, 420);
     if (mouseIsPressed && mouseX>=slix2-40 && mouseX<=slix2+40 &&
     mouseY>=sliy2-10 && mouseY<=sliy2+10) {
       sx2 = mouseX;
@@ -147,6 +166,20 @@ function draw() {
       rect(fadePosx2, fadePosy2, 10, 18, 6, 6, 6, 6);
     }
     module01.setVolume(Math.floor((fadePosx2-395)*1.25)/100);
+    // vumetro 1
+    vol1 = amp1.getLevel();
+    vol1hist.push(vol1/7);
+    stroke(255);
+    noFill();
+    beginShape();
+    for (var i = 0; i < vol1hist.length; i++) {
+      var y = map(vol1hist[i], 0, 1, medy-65, 0);
+      vertex(i+396, y);
+    }
+    endShape();
+    if (vol1hist.length > 135) {
+      vol1hist.splice(0, 1);
+    }
 
     // sliderPan3
     fadePosx3 = sx3
@@ -162,7 +195,7 @@ function draw() {
     } else {
       fill(150);
     }
-    text(Math.floor((fadePosx3-605)*1.25)-100, slix3-60, 420);
+    text(Math.floor((fadePosx3-605)*1.25)-100, slix3-57, 420);
     if (mouseIsPressed && mouseX>=slix3-40 && mouseX<=slix3+40 &&
     mouseY>=sliy3-10 && mouseY<=sliy3+10) {
       sx3 = mouseX;
@@ -188,7 +221,7 @@ function draw() {
     } else {
       fill(150);
     }
-    text(Math.floor((fadePosx4-605)*1.25)-50, slix4+60, 420);
+    text(Math.floor((fadePosx4-605)*1.25)-50, slix4+53, 420);
     if (mouseIsPressed && mouseX>=slix4-40 && mouseX<=slix4+40 &&
     mouseY>=sliy4-10 && mouseY<=sliy4+10) {
       sx4 = mouseX;
@@ -199,6 +232,20 @@ function draw() {
       rect(fadePosx4, fadePosy4, 10, 18, 6, 6, 6, 6);
     }
     module02.setVolume((Math.floor((fadePosx4-605)*1.25)-50)/100);
+    // vumetro 2
+    vol2 = amp2.getLevel();
+    vol2hist.push(vol2/7);
+    stroke(255);
+    noFill();
+    beginShape();
+    for (var i = 0; i < vol2hist.length; i++) {
+      var y = map(vol2hist[i], 0, 1, medy-65, 0);
+      vertex(i+644, y);
+    }
+    endShape();
+    if (vol2hist.length > 135) {
+      vol2hist.splice(0, 1);
+    }
 
     // sliderPan5
     fadePosx5 = sx5
@@ -214,7 +261,7 @@ function draw() {
     } else {
       fill(150);
     }
-    text(Math.floor((fadePosx5-855)*1.25)-100, slix5-60, 420);
+    text(Math.floor((fadePosx5-855)*1.25)-100, slix5-59, 420);
     if (mouseIsPressed && mouseX>=slix5-40 && mouseX<=slix5+40 &&
     mouseY>=sliy5-10 && mouseY<=sliy5+10) {
       sx5 = mouseX;
@@ -240,7 +287,7 @@ function draw() {
     } else {
       fill(150);
     }
-    text(Math.floor((fadePosx6-855)*1.25)-50, slix6+60, 420);
+    text(Math.floor((fadePosx6-855)*1.25)-50, slix6+51, 420);
     if (mouseIsPressed && mouseX>=slix6-40 && mouseX<=slix6+40 &&
     mouseY>=sliy6-10 && mouseY<=sliy6+10) {
       sx6 = mouseX;
@@ -251,6 +298,22 @@ function draw() {
       rect(fadePosx6, fadePosy6, 10, 18, 6, 6, 6, 6);
     }
     module03.setVolume((Math.floor((fadePosx6-855)*1.25)-50)/100);
+
+    // vumetro 2
+    vol3 = amp3.getLevel();
+    vol3hist.push(vol3/7);
+    stroke(255);
+    noFill();
+    beginShape();
+    for (var i = 0; i < vol3hist.length; i++) {
+      var y = map(vol3hist[i], 0, 1, medy-65, 0);
+      vertex(i+892, y);
+    }
+    endShape();
+    if (vol3hist.length > 135) {
+      vol3hist.splice(0, 1);
+    }
+    noStroke();
 
       // BOTON DE PLAY GENERAL
 
