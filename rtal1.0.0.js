@@ -24,44 +24,32 @@ function setup() {
   medx = width/2;
   medy = height/2;
   textFont("Ampera");
-
 }
 
 function loaded1() {
   console.log("loaded");
   loadComp++;
-  textSize(12);
-  fill(255, 100);
-  text("Ready", width/2-315, height/2-24)
 }
 function loaded2() {
   console.log("loaded");
   loadComp++;
-  textSize(12);
-  fill(255, 100);
-  text("Ready", width/2-65, height/2-24)
 }
 function loaded3() {
   console.log("loaded");
   loadComp++;
-  textSize(12);
-  fill(255, 100);
-  text("Ready", width/2+185, height/2-24)
 }
-
 
 function draw() {
   background(50, 100, 150);
   // console.log(loadComp);
+  rectMode(CENTER);
 
-
-  rectMode(CORNER);
   // first module
   fill(39,60,81);
-  rect(medx-boxsizex/2-250-8, medy-boxsizey/2-50, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
+  rect(medx-248, medy+15, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
   fill(50, 82, 115);
-  rect(medx-boxsizex/2-250, medy-boxsizey/2, boxsizex, boxsizey, 0, 10, 10, 10);
-  rect(medx-boxsizex/2-250, medy-boxsizey/2-40, 50, 40, 10, 10, 0, 0);
+  rect(medx-248, medy, boxsizex, boxsizey, 0, 10, 10, 10);
+  rect(medx-323, medy-70, 50, 40, 10, 10, 0, 0);
   fill(150)
   textAlign(CENTER);
   textStyle(BOLD);
@@ -70,10 +58,10 @@ function draw() {
 
   // second module
   fill(39,60,81);
-  rect(medx-boxsizex/2-8, medy-boxsizey/2-50, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
+  rect(medx, medy+15, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
   fill(50, 82, 115);
-  rect(medx-boxsizex/2, medy-boxsizey/2, boxsizex, boxsizey, 0, 10, 10, 10);
-  rect(medx-boxsizex/2, medy-boxsizey/2-40, 50, 40, 10, 10, 0, 0);
+  rect(medx, medy, boxsizex, boxsizey, 0, 10, 10, 10);
+  rect(medx-75, medy-70, 50, 40, 10, 10, 0, 0);
   fill(150)
   textAlign(CENTER);
   textStyle(BOLD);
@@ -82,10 +70,10 @@ function draw() {
 
   // third module
   fill(39,60,81);
-  rect(medx-boxsizex/2+250-8, medy-boxsizey/2-50, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
+  rect(medx+248, medy+15, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
   fill(50, 82, 115);
-  rect(medx-boxsizex/2+250, medy-boxsizey/2, boxsizex, boxsizey, 0, 10, 10, 10);
-  rect(medx-boxsizex/2+250, medy-boxsizey/2-40, 50, 40, 10, 10, 0, 0);
+  rect(medx+248, medy, boxsizex, boxsizey, 0, 10, 10, 10);
+  rect(medx+173, medy-70, 50, 40, 10, 10, 0, 0);
   fill(150)
   textAlign(CENTER);
   textStyle(BOLD);
@@ -101,6 +89,11 @@ function draw() {
     } else {
        ovPr = 20;
     }
+
+    rule = height/2;
+    stroke(0);
+    line(0, rule, windowWidth, rule);
+    noStroke();
 
 
     // sliderPan1
