@@ -1,7 +1,7 @@
 var x1 = Math.floor((Math.random() * 10) + 1);
 var x2 = Math.floor((Math.random() * 10) + 1);
 var x3 = Math.floor((Math.random() * 10) + 1);
-var sx1=435, sx2=425, sx3=685, sx4=645, sx5=935, sx6=895;
+var sx1=435, sx2=435, sx3=685, sx4=645, sx5=935, sx6=895;
 var sy1=322, sy2=283, sy3=322, sy4=283, sy5=322, sy6=283;
 var slix1=435, slix2=435, slix3=685, slix4=685, slix5=935, slix6=935;
 var sliy1=322, sliy2=283, sliy3=322, sliy4=283, sliy5=322, sliy6=283;
