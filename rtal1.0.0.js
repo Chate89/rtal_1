@@ -1,10 +1,6 @@
 var x1 = Math.floor((Math.random() * 10) + 1);
 var x2 = Math.floor((Math.random() * 10) + 1);
 var x3 = Math.floor((Math.random() * 10) + 1);
-var sx1=435, sx2=435, sx3=685, sx4=645, sx5=935, sx6=895;
-var sy1=322, sy2=283, sy3=322, sy4=283, sy5=322, sy6=283;
-var slix1=435, slix2=435, slix3=685, slix4=685, slix5=935, slix6=935;
-var sliy1=322, sliy2=283, sliy3=322, sliy4=283, sliy5=322, sliy6=283;
 var boxsizex = 200;
 var boxsizey = 100;
 var overRectstart = 1;
@@ -17,6 +13,7 @@ function preload() {
 var vol1hist = [];
 var vol2hist = [];
 var vol3hist = [];
+var ps;
 
 
 function setup() {
@@ -34,6 +31,11 @@ function setup() {
   amp1.setInput(module01);
   amp2.setInput(module02);
   amp3.setInput(module03);
+  sx1=435, sx2=435, sx3=685, sx4=645, sx5=935, sx6=895;
+  sy1=medy+19, sy2=medy-20, sy3=medy+19, sy4=medy-20, sy5=medy+19, sy6=medy-20;
+  slix1=435, slix2=435, slix3=685, slix4=685, slix5=935, slix6=935;
+  sliy1=medy+19, sliy2=medy-20, sliy3=medy+19, sliy4=medy-20, sliy5=medy+19, sliy6=medy-20;
+   console.log(height);
 
 }
 
@@ -97,15 +99,6 @@ function draw() {
   textSize(30);
   text(x3, medx-boxsizex/2+275, medy-boxsizey/2-10);
 
-  if (mouseX >= width/2-65 && mouseX <= width/2+65 &&
-     mouseY >= 130 && mouseY <= 130+30 && mouseIsPressed) {
-       ovPr = 0;
-    } else if (mouseX >= width/2-65 && mouseX <= width/2+65 &&
-      mouseY >= 130 && mouseY <= 130+30) {
-        ovPr = 30;
-    } else {
-       ovPr = 20;
-    }
 
     // ruleH = medy-74;
     // stroke(0);
@@ -299,7 +292,7 @@ function draw() {
     }
     module03.setVolume((Math.floor((fadePosx6-855)*1.25)-50)/100);
 
-    // vumetro 2
+    // vumetro 3
     vol3 = amp3.getLevel();
     vol3hist.push(vol3/7);
     stroke(255);
@@ -316,44 +309,44 @@ function draw() {
     noStroke();
 
       // BOTON DE PLAY GENERAL
+    if (module01.isPlaying() ||  module02.isPlaying() || module03.isPlaying)
 
-  fill(50, 100, 150);
-  rectMode(CORNER);
-  fill(50, 90);
-  rectMode(CORNER);
-  rect(medx-100, 115, 200, 50, 10, 10, 10, 10);
+
+    if (mouseX >= medx-100 && mouseX <= medx+100 &&
+      mouseY >= medy-187 && mouseY <= medy-137 && mouseIsPressed) {
+        ovPr = 0;
+    } else if (mouseX >= medx-100 && mouseX <= medx+100 &&
+      mouseY >= medy-187 && mouseY <= medy-137) {
+      ovPr = 30;
+    } else {
+      ovPr = 20;
+    }
+  rectMode(CENTER);
+  fill(50,82,115);
+  rect(medx, medy-162, 200, 50, 10, 10, 10, 10);
   fill(ovPr, 90);
-  rect(medx-100+4, 115+4, 192, 42, 8, 8, 8, 8);
+  rect(medx, medy-162, 192, 42, 8, 8, 8, 8);
   fill(150, 255)
-  textAlign(CENTER);
   textSize(30);
   if (loadComp == 3) {
-    text("click to play", medx, 150);
+    text("click to " + ps, medx, medy-153);
   } else {
-    text("loading", medx, 150);
+    text("loading", medx, medy-153);
   }
+
+  console.log(ovPr );
 }
 
 function mousePressed() {
- if (module01.isPlaying() && mouseX >= width/2-65 && mouseX <= width/2+65 &&
-    mouseY >= 130 && mouseY <= 130+30) {
+ if (module01.isPlaying() ||  module02.isPlaying() || module03.isPlaying() &&
+ mouseX >= medx-100 && mouseX <= medx+100 &&     mouseY >= medy-187 && mouseY <= medy-137) {
    module01.pause();
- } else if (mouseX > width/2-65 && mouseX <= width/2+65 &&
-    mouseY >= 130 && mouseY <= 130+30){
-   module01.play();
- }
- if (module02.isPlaying() && mouseX > width/2-65 && mouseX <= width/2+65 &&
-    mouseY >= 130 && mouseY <= 130+30) {
    module02.pause();
- } else if (mouseX > width/2-65 && mouseX <= width/2+65 &&
-    mouseY >= 130 && mouseY <= 130+30){
-   module02.play();
- }
- if (module03.isPlaying() && mouseX > width/2-65 && mouseX <= width/2+65 &&
-    mouseY >= 130 && mouseY <= 130+30) {
    module03.pause();
- } else if (mouseX > width/2-65 && mouseX <= width/2+65 &&
-    mouseY >= 130 && mouseY <= 130+30){
+ } else if (mouseX >= medx-100 && mouseX <= medx+100 &&
+   mouseY >= medy-187 && mouseY <= medy-137) {
+   module01.play();
+   module02.play();
    module03.play();
  }
-}
+ }
