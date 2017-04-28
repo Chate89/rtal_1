@@ -333,6 +333,11 @@ function draw() {
   } else {
     text("loading", medx, medy-153);
   }
+  if (module01.isPlaying() ||  module02.isPlaying() || module03.isPlaying()) {
+    ps = "stop";
+  } else {
+    ps = "play";
+  }
 
   console.log(ovPr );
 }
