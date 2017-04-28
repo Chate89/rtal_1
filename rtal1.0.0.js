@@ -16,6 +16,7 @@ var vol3hist = [];
 var ps;
 
 
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   module01 = loadSound("data/Module01/00_" + x1 + '.mp3', loaded1);
@@ -35,7 +36,6 @@ function setup() {
   sy1=medy+19, sy2=medy-20, sy3=medy+19, sy4=medy-20, sy5=medy+19, sy6=medy-20;
   slix1=435, slix2=435, slix3=685, slix4=685, slix5=935, slix6=935;
   sliy1=medy+19, sliy2=medy-20, sliy3=medy+19, sliy4=medy-20, sliy5=medy+19, sliy6=medy-20;
-   console.log(height);
 
 }
 
@@ -338,13 +338,11 @@ function draw() {
   } else {
     ps = "play";
   }
-
-  console.log(ovPr );
 }
 
 function mousePressed() {
- if (module01.isPlaying() ||  module02.isPlaying() || module03.isPlaying() &&
- mouseX >= medx-100 && mouseX <= medx+100 &&     mouseY >= medy-187 && mouseY <= medy-137) {
+ if ((module01.isPlaying() ||  module02.isPlaying() || module03.isPlaying()) &&
+ mouseX >= medx-100 && mouseX <= medx+100 && mouseY >= medy-187 && mouseY <= medy-137) {
    module01.pause();
    module02.pause();
    module03.pause();
@@ -353,5 +351,7 @@ function mousePressed() {
    module01.play();
    module02.play();
    module03.play();
+ } else {
+
  }
  }
