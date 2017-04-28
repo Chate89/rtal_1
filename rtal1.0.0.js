@@ -13,13 +13,17 @@ function preload() {
 var vol1hist = [];
 var vol2hist = [];
 var vol3hist = [];
+var vol1histM = [];
+var vol2histM = [];
+var vol3histM = [];
+
 var ps;
 
-
+// data/Pruebas de frecuencias/constantes/1.0/400.mp3
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  module01 = loadSound("data/Module01/00_" + x1 + '.mp3', loaded1);
+  module01 = loadSound("data/Module01/00_" + x1 + '.mp3' , loaded1);
   module02 = loadSound("data/Module01/00_" + x2 + '.mp3', loaded2);
   module03 = loadSound("data/Module01/00_" + x3 + '.mp3', loaded3);
   noStroke();
@@ -159,20 +163,6 @@ function draw() {
       rect(fadePosx2, fadePosy2, 10, 18, 6, 6, 6, 6);
     }
     module01.setVolume(Math.floor((fadePosx2-395)*1.25)/100);
-    // vumetro 1
-    vol1 = amp1.getLevel();
-    vol1hist.push(vol1/7);
-    stroke(255);
-    noFill();
-    beginShape();
-    for (var i = 0; i < vol1hist.length; i++) {
-      var y = map(vol1hist[i], 0, 1, medy-65, 0);
-      vertex(i+396, y);
-    }
-    endShape();
-    if (vol1hist.length > 135) {
-      vol1hist.splice(0, 1);
-    }
 
     // sliderPan3
     fadePosx3 = sx3
@@ -225,20 +215,7 @@ function draw() {
       rect(fadePosx4, fadePosy4, 10, 18, 6, 6, 6, 6);
     }
     module02.setVolume((Math.floor((fadePosx4-605)*1.25)-50)/100);
-    // vumetro 2
-    vol2 = amp2.getLevel();
-    vol2hist.push(vol2/7);
-    stroke(255);
-    noFill();
-    beginShape();
-    for (var i = 0; i < vol2hist.length; i++) {
-      var y = map(vol2hist[i], 0, 1, medy-65, 0);
-      vertex(i+644, y);
-    }
-    endShape();
-    if (vol2hist.length > 135) {
-      vol2hist.splice(0, 1);
-    }
+
 
     // sliderPan5
     fadePosx5 = sx5
@@ -292,6 +269,38 @@ function draw() {
     }
     module03.setVolume((Math.floor((fadePosx6-855)*1.25)-50)/100);
 
+
+    // --------------- VUMETROS --------------- //
+
+    // vumetro 1
+
+    vol1 = amp1.getLevel();
+    vol1hist.push(vol1/7);
+    stroke(255);
+    noFill();
+    beginShape();
+    for (var i = 0; i < vol1hist.length; i++) {
+      var y = map(vol1hist[i], 0, 1, medy-65, 0);
+      vertex(i+396, y);
+    }
+    endShape();
+    if (vol1hist.length > 135) {
+      vol1hist.splice(0, 1);
+    }
+    // vumetro 2
+    vol2 = amp2.getLevel();
+    vol2hist.push(vol2/7);
+    stroke(255);
+    noFill();
+    beginShape();
+    for (var i = 0; i < vol2hist.length; i++) {
+      var y = map(vol2hist[i], 0, 1, medy-65, 0);
+      vertex(i+644, y);
+    }
+    endShape();
+    if (vol2hist.length > 135) {
+      vol2hist.splice(0, 1);
+    }
     // vumetro 3
     vol3 = amp3.getLevel();
     vol3hist.push(vol3/7);
@@ -307,6 +316,61 @@ function draw() {
       vol3hist.splice(0, 1);
     }
     noStroke();
+
+    // --------------- VUMETRO GENERAL --------------- //
+
+    fill(50,82,115);
+    rect(medx, medy+200, 600, 80, 10, 10, 10, 10);
+    fill(30,50,70);
+    rect(medx, medy+200, 596, 76, 10, 10, 10, 10);
+    fill(15,25,35);
+    rect(medx, medy+200, 580, 60, 10, 10, 10, 10);
+    // vumetro 1
+    vol1 = amp1.getLevel();
+    vol1histM.push(vol1/6.3);
+    stroke(200, 200, 255);
+    noFill();
+    beginShape();
+    for (var i = 0; i < vol1histM.length; i++) {
+      var y = map(vol1histM[i], 0, 1, medy+220 , 0);
+      vertex(i+400, y);
+    }
+    endShape();
+    if (vol1histM.length > 566) {
+      vol1histM.splice(0, 1);
+    }
+    // vumetro 2
+    vol2 = amp2.getLevel();
+    vol2histM.push(vol2/6.3);
+    stroke(100, 100, 255);
+    noFill();
+    beginShape();
+    for (var i = 0; i < vol2histM.length; i++) {
+      var y = map(vol2histM[i], 0, 1, medy+218, 0);
+      vertex(i+400, y);
+    }
+    endShape();
+    if (vol2histM.length > 566) {
+      vol2histM.splice(0, 1);
+    }
+    // vumetro 3
+    vol3 = amp3.getLevel();
+    vol3histM.push(vol3/6.3);
+    stroke(255);
+    noFill();
+    beginShape();
+    for (var i = 0; i < vol3histM.length; i++) {
+      var y = map(vol3histM[i], 0, 1, medy+216, 0);
+      vertex(i+400, y);
+    }
+    endShape();
+    if (vol3histM.length > 566) {
+      vol3histM.splice(0, 1);
+    }
+    noStroke();
+
+
+
 
       // BOTON DE PLAY GENERAL
     if (module01.isPlaying() ||  module02.isPlaying() || module03.isPlaying)
