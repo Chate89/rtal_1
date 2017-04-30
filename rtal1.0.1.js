@@ -1,6 +1,9 @@
 var x1 = Math.floor((Math.random() * 10) + 1);
 var x2 = Math.floor((Math.random() * 10) + 1);
 var x3 = Math.floor((Math.random() * 10) + 1);
+var m1l = 0;
+var m2l = 0;
+var m3l = 0;
 var boxsizex = 200;
 var boxsizey = 100;
 var overRectstart = 1;
@@ -33,9 +36,9 @@ function setup() {
   cnv.mouseWheel(changeYpos);
   upi = 50;
 
-  module01 = loadSound("data/Module01/00_" + x1 + '.mp3', loaded1);
-  module02 = loadSound("data/Module01/00_" + x2 + '.mp3', loaded2);
-  module03 = loadSound("data/Module01/00_" + x3 + '.mp3', loaded3);
+  module01 = loadSound("data/Module01/00_" + x1 + '.mp3', loaded1, null, loading1);
+  module02 = loadSound("data/Module01/00_" + x2 + '.mp3', loaded2, null, loading2);
+  module03 = loadSound("data/Module01/00_" + x3 + '.mp3', loaded3, null, loading3);
   noStroke();
   medx = width/2;
   medy = height/2;
@@ -55,14 +58,24 @@ function setup() {
 function loaded1() {
   console.log("loaded");
   loadComp++;
+  return false;
+}
+function loading1(total1) {
+  m1l = total1;
 }
 function loaded2() {
   console.log("loaded");
   loadComp++;
 }
+function loading2(total2) {
+  m2l = total2;
+}
 function loaded3() {
   console.log("loaded");
   loadComp++;
+}
+function loading3(total3) {
+  m3l = total3;
 }
 
 function draw() {
@@ -74,19 +87,21 @@ function draw() {
   sliy1=medy+19-upi, sliy2=medy-20-upi, sliy3=medy+19-upi,
   sliy4=medy-20-upi, sliy5=medy+19-upi, sliy6=medy-20-upi;
   // masterVolume(mv);
-  // console.log(mv);
 
-  // console.log(loadComp);
+
   rectMode(CENTER);
   // Base rectangle
   fill(30, 50, 70);
   rect(medx, medy+27-upi, 866, 406, 20, 20, 20, 20)
   fill(10,16,22);
-  rect(medx, medy+27-upi, 860, 400, 20, 20, 20, 20)
+  rect(medx, medy+27-upi, 860, 400, 20, 20, 20, 20);
+  console.log(((m1l+m2l+m3l)*100+3)/3);
 
   // first module
   fill(20,40,50);
   rect(medx-244, medy+22-upi, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
+  fill(20,40,50);
+  rect(medx-244, medy-60-upi, boxsizex+15, boxsizey+30, 10, 10, 10, 10);
   fill(39,60,81);
   rect(medx-248, medy+17-upi, boxsizex+15, boxsizey+130, 10, 10, 10, 10);
   fill(50, 82, 115);
@@ -98,12 +113,16 @@ function draw() {
   textAlign(CENTER);
   textStyle(BOLD);
   textSize(30);
-  text(x1, medx-boxsizex/2-250+25+2, medy-upi-boxsizey/2-10+2);
-  fill(150)
-  textAlign(CENTER);
-  textStyle(BOLD);
-  textSize(30);
-  text(x1, medx-boxsizex/2-250+25, medy-upi-boxsizey/2-10);
+  if (loaded1) {
+    text(x1, medx-boxsizex/2-250+25+2, medy-upi-boxsizey/2-10+2);
+    fill(150)
+    textAlign(CENTER);
+    textStyle(BOLD);
+    textSize(30);
+    text(x1, medx-boxsizex/2-250+25, medy-upi-boxsizey/2-10);
+  } else {
+    text("loading", medx-boxsizex/2-250+25+2, medy-upi-boxsizey/2-10+2);
+  }
 
   // second module
   fill(20,40,50);
@@ -197,7 +216,7 @@ function draw() {
     text(nMasF, slixM-4, 188-upi);
 
 
-    console.log(mv);
+
 
 
     // sliderPan1
@@ -269,6 +288,8 @@ function draw() {
       rect(fadePosx2-1, fadePosy2-1, 8, 16, 6, 6, 6, 6);
     }
     module01.setVolume(Math.floor((fadePosx2-395)*1.25)/100);
+    //mutebutton
+
 
     // sliderPan3
     fadePosx3 = sx3
