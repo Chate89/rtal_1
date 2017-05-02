@@ -7,6 +7,8 @@ function Module() {
   this.modNum = 0;
   this.currentPlace_01 = this.x;
   this.currentPlace_02 = this.x;
+  this.trackInModule = 0;
+  this.action = " ";
   this.display = function() {
     noStroke();
     rectMode(CORNER);
@@ -36,9 +38,6 @@ function Module() {
     // metadata values
     this.metavol = 1+floor(map((split(metadata[this.modNum*5],":")[1]), 0, 100, 0, 112));
     this.metapan = 1+floor(map((split(metadata[1+this.modNum*5],":")[1]), -50, 50, 0, 112));
-    // fill(255);
-    // text(floor(map(this.metavol, 0, 112, 0, 100)), this.x, this.y);
-    // text(floor(map(this.metapan, 0, 112, -50, 50)), this.x, this.y+25);
 
     //  adding metadata
     if (this.currentPlace_01 < this.x-10) {
@@ -70,12 +69,12 @@ function Module() {
       fill(39,72,104);
       rect(this.currentPlace_01, this.y+83, 15, 15, 10, 10, 10, 10);
     }
-    this.vol_1 = map(this.currentPlace_01, this.x+38, this.x+150, 0, 1);
+    this.sli_1 = floor(map(this.currentPlace_01, this.x+38, this.x+150, 0, 100));
     fill(150);
     textSize(25);
     textAlign(CENTER);
-    text(floor(this.vol_1*100), this.x + 212, this.y + 92);
-
+    text(floor(this.sli_1), this.x + 212, this.y + 92);
+    this.volfade = map(this.sli_1/100, 0, 1, 100, 255);
 
     rectMode(CORNER);
     // slider_02
@@ -98,13 +97,31 @@ function Module() {
       fill(39,72,104);
       rect(this.currentPlace_02, this.y+133, 15, 15, 10, 10, 10, 10);
     }
-    this.vol_2 = map(this.currentPlace_02, this.x+38, this.x+150, -0.5, 0.5);
+    this.sli_2 = map(this.currentPlace_02, this.x+38, this.x+150, -0.5, 0.5);
     textAlign(CENTER);
     textSize(25);
     fill(150);
-    text(floor(this.vol_2*100), this.x + 212, this.y + 145);
+    text(floor(this.sli_2*100), this.x + 212, this.y + 145);
 
+    // track loader
+    if (track[this.trackInModule].isLoaded() && !track[this.trackInModule].isPlaying()) {
+      this.action = "ready"
+      fill(100, 100, this.volfade);
+      text(this.action, this.x+150, this.y+40);
+    } else if (!track[this.trackInModule].isPlaying()){
+      this.action = "loading"
+      fill(100, 100, this.volfade);
+      text(this.action, this.x+150, this.y+40);
+    }
+    // track isPlaying
+    if (track[this.trackInModule].isPlaying()) {
+      this.action = "playing"
+      fill(100,  this.volfade, 100);
+      text(this.action, this.x+150, this.y+40);
+    }
 
-
+    // set: volume and pan
+    track[this.trackInModule].setVolume(this.sli_1/100); //vol
+    track[this.trackInModule].pan(this.sli_2*2);
   };
 }
